@@ -5,6 +5,7 @@
     <h1>商品一覧画面</h1>
     <div class=products_list>
       <table>
+        @csrf
         <thead>
           <tr>
             <th>メーカー</th>
