@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>自動販売機管理システム</title>
-  </head>
-  <body>
+@extends('layouts.app')
+
+@section('content')
+  <div class="container">
     <h1>商品一覧画面</h1>
     <div class=products_list>
       <table>
@@ -21,7 +18,7 @@
         @foreach ($products as $product)
           <tr>
             <td>{{ $product->company_id }}</td>
-            <td>{{ $product->name }}</td>
+            <td><a href="{{ route('products.show', $product) }}">{{ $product->name }}</a></td>
             <td>{{ $product->price }}</td>
             <td>{{ $product->stock }}</td>
             <td>{{ $product->comment }}</td>
@@ -30,5 +27,6 @@
         </tbody>
       </table>
     </div>
-  </body>
-</html>
+    <a href="{{ route('products.create') }}">商品を登録する</a>
+  </div>
+@endsection
