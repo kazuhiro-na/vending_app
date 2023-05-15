@@ -20,7 +20,7 @@
           <tr>
             <td>{{ $product->company->company_name }}</td>
             <td><a href="{{ route('products.show', $product) }}">{{ $product->name }}</a></td>
-            <td>{{ $product->price }}</td>
+            <td>{{ $product->price }}円</td>
             <td>{{ $product->stock }}</td>
             <td>{{ $product->comment }}</td>
           </tr>
