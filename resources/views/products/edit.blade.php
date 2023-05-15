@@ -8,7 +8,7 @@
       @method('PUT')
 
       <p>
-        <label for="product-id">商品情報ID</label>
+        <label for="product-id">商品情報ID:{{ $product->id }}</label>
       </p>
 
       <p>
@@ -17,8 +17,12 @@
       </p>
 
       <p>
-        <label for="maker">メーカー</label>
-        <input type="text" name="maker" id="maker" value="{{ $product->company_id }}">
+        <label for="company_id">メーカー</label>
+        <select name="company_id" id="company_id" name="company_id" value="{{ $product->company->company_name }}" >
+            @foreach($companies as $company)
+              <option value="{{ $company->id }}" {{ $product->company_id == $company->id ? 'selected' : '' }}>{{ $company->company_name }}</option>
+            @endforeach
+        </select>
       </p>
 
       <p>
