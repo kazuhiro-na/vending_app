@@ -20,13 +20,13 @@
         </div>
 
         <div class="form-group row">
-          <label for="maker">メーカー</label>
-          <select name="maker" id="maker" class="form-control @error('maker') is-invalid @enderror" name="maker" value="{{ old('maker') }}" required autocomplete="maker" autofocus>
-            <option value="A">A社</option>
-      			<option value="B">B社</option>
-			      <option value="C">C社</option>
+          <label for="company_id">メーカー</label>
+          <select name="company_id" id="company_id" class="form-control @error('company_id') is-invalid @enderror" name="company_id" value="{{ old('company_id') }}" required autocomplete="company_id" autofocus>
+            @foreach($companies as $company)
+              <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+            @endforeach
           </select>
-          @error('maker')
+          @error('company_id')
             <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
             </span>
