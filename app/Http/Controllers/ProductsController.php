@@ -21,7 +21,6 @@ class ProductsController extends Controller
         return view('products.create', compact('companies'));
     }
     //商品を登録する
-
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -41,6 +40,12 @@ class ProductsController extends Controller
         $product->save();
 
         return redirect('/products')->with('success', '商品を登録しました。');
+    }
+    //商品詳細を表示
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('products.show', ['product' => $product]);
     }
 
 
