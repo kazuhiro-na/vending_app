@@ -6,7 +6,7 @@
       <div class="card-header">商品詳細</div>
 
       <div class="card-body">
-        <div class="form-group">
+        <div class="form-group">  
           <label for="product-id">商品情報ID</label>
           <p>{{ $product->id }}</p>
         </div>
@@ -17,13 +17,13 @@
         </div>
 
         <div class="form-group">
-          <label for="maker">メーカー</label>
-          <p>{{ $product->company_id}}</p>
+          <label for="company_id">メーカー</label>
+          <p>{{ $product->company->company_name }}</p>
         </div>
 
         <div class="form-group">
           <label for="price">価格</label>
-          <p>{{ $product->price }}</p>
+          <p>{{ $product->price }}円</p>
         </div>
 
         <div class="form-group">
@@ -38,8 +38,7 @@
 
         <div class="form-group">
           <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary">編集</a>
-          <br>
-          <a href="{{ route('products.index' }}">戻る</a>
+          <a href="{{ route('products.index') }}" class="btn btn-light">戻る</a>
         </div>
         
       </div>
