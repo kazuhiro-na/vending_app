@@ -24,15 +24,23 @@ class ProductsController extends Controller
 
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'company_id' => 'required',
+            'price' => 'required|numeric',
+            'stock' => 'required|numeric',
+            'comment' => 'nullable',
+        ]);
+
         $product = new Product;
-        $product->company_id = $request->company_id;
         $product->name = $request->name;
+        $product->company_id = $request->company_id;
         $product->price = $request->price;
-        $product->stock = $product->stock;
-        $product->comment = $product->comment;
+        $product->stock = $request->stock;
+        $product->comment = $request->comment;
         $product->save();
 
-        return redirect()->route('products.index');
+        return redirect('/products')->with('success', '商品を登録しました。');
     }
 
 
