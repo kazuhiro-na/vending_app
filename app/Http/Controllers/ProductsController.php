@@ -47,6 +47,13 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
         return view('products.show', ['product' => $product]);
     }
+    //商品編集画面を表示
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
+        $companies = Company::all();
+        return view('products.edit', ['product' => $product, 'companies' => $companies]);
+    }
 
 
 }
