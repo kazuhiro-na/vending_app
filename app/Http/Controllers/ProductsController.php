@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
 use App\Models\Company;
 
@@ -53,6 +54,35 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
         $companies = Company::all();
         return view('products.edit', ['product' => $product, 'companies' => $companies]);
+    }
+    //商品情報を更新
+    public function update(Request $request, $id)
+    {
+        $rules = [
+            'name' => 'required|max:255',
+            'company_id' => 'required',
+            'price' => 'required|numeric',
+            'stock' => 'required|numeric',
+            'comment' => 'nullable',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        
+        $product = Product::findOrFail($id);
+
+        $product->name = $request->input('name');
+        $product->company_id = $request->input('company_id');
+        $product->price = $request->input('price');
+        $product->stock = $request->input('stock');
+        $product->comment = $request->input('comment');
+
+        $product->save();
+
+        return redirect()->route('products.show', ['product' => $product->id])->with('success', '商品が更新されました');
     }
 
 
