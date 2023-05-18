@@ -85,5 +85,12 @@ class ProductsController extends Controller
         return redirect()->route('products.show', ['product' => $product->id])->with('success', '商品が更新されました');
     }
 
+    public function destroy(Product $product)
+    {
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success', '商品を削除しました。');
+    }
+
 
 }
