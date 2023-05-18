@@ -51,6 +51,7 @@
       @endif
 
       <button type="submit">更新</button>
+      <a href="{{ route('products.index') }}" class="btn btn-light">戻る</a>
 
     </form>
   </div>

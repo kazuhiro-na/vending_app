@@ -64,6 +64,7 @@
         <button type="submit" class="btn btn-primary">
           {{__('登録')}}
         </button>
+        <a href="{{ route('products.index') }}" class="btn btn-light">戻る</a>
     </div>
   </div>
 @endsection
