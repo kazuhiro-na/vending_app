@@ -10,10 +10,24 @@ use App\Models\Company;
 class ProductsController extends Controller
 {   
     //商品一覧を表示
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
-        return view('products.index', compact('products'));
+        $query = Product::query();
+
+        if ($request->filled('product_name')) {
+            $query->where('name', 'like', '%' . $request->input('product_name') . '%');
+        }
+
+        if ($request->filled('company_name')) {
+            $query->whereHas('company', function($query) use ($request) {
+                $query->where('company_name', $request->input('company_name'));
+            });
+        }
+
+        $products = $query->get();
+        $companies = Company::all();
+        
+        return view('products.index', compact('products', 'companies'));
     }
     //商品登録フォームを表示
     public function create()
