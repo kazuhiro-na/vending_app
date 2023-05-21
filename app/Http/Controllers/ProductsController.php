@@ -44,6 +44,7 @@ class ProductsController extends Controller
             'price' => 'required|numeric',
             'stock' => 'required|numeric',
             'comment' => 'nullable',
+            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $product = new Product;
@@ -52,6 +53,13 @@ class ProductsController extends Controller
         $product->price = $request->price;
         $product->stock = $request->stock;
         $product->comment = $request->comment;
+
+        if ($request->hasFile('image_path')) {
+            $image = $request->file('image_path');
+            $imagePath = $image->store('products', 'public');
+            $product->image_path = $imagePath;
+        }
+
         $product->save();
 
         return redirect('/products')->with('success', '商品を登録しました。');
