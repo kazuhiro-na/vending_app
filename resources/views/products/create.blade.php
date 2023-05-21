@@ -5,7 +5,7 @@
     <div class="content-header">商品登録</div>
 
     <div class="content-body">
-      <form method="Post" action="{{ route('products.store') }}">
+      <form method="Post" action="{{ route('products.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group row">
@@ -58,6 +58,17 @@
         <div class="form-group row">
           <label for="comment">コメント</label>
           <textarea name="comment" id="comment"></textarea>
+        </div>
+
+        <div class="form-group row">
+          <label for="image_path">商品画像</label>
+          <input type="file" name="image_path" class="form-control @error('image_path') is-invalid @enderror">
+
+          @error('image_path')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+          @enderror
         </div>
 
         <br>
