@@ -11,6 +11,10 @@
           <p>{{ $product->id }}</p>
         </div>
 
+        <div class="card-body">
+          <img src="{{ asset('storage/' . $product->image_path) }}" alt="商品画像">
+        </div>
+
         <div class="form-group">
           <label for="name">商品名</label>
           <p>{{ $product->name }}</p>
