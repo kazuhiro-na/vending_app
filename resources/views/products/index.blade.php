@@ -39,7 +39,7 @@
         @foreach ($products as $product)
           <tr>
             <td>{{ $product->company->company_name }}</td>
-            <td><img src="{{ asset('storage/' . $product->image_path) }}" alt="商品画像"></td>
+            <td><img src="{{ asset('storage/' . $product->image_path) }}" alt="商品画像" style="max-width: 200px;"></td>
             <td><a href="{{ route('products.show', $product) }}">{{ $product->name }}</a></td>
             <td>{{ $product->price }}円</td>
             <td>{{ $product->stock }}</td>

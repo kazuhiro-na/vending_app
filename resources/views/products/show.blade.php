@@ -12,7 +12,7 @@
         </div>
 
         <div class="card-body">
-          <img src="{{ asset('storage/' . $product->image_path) }}" alt="商品画像">
+          <img src="{{ asset('storage/' . $product->image_path) }}" alt="商品画像" style="max-width: 200px;">
         </div>
 
         <div class="form-group">
