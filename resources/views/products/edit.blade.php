@@ -3,7 +3,7 @@
 @section('content')
   <div class="container">
     <h1>商品情報編集</h1>
-    <form action="{{ route('products.update', $product->id) }}" method="post">
+    <form action="{{ route('products.update', $product->id) }}" method="post" enctype="multipart/form-data">
       @csrf
       @method('PUT')
 
@@ -38,6 +38,16 @@
       <p>
         <label for="comment">コメント</label>
         <input type="text" name="comment" id="comment" value="{{ $product->comment }}">
+      </p>
+
+      <p>
+        <label for="image_path">商品画像</label>
+        <input type="file" name="image_path" id="image_path" accept="image/*">
+        @if ($product->image_path)
+          <div>
+            <img src="{{ asset('storage/' . $product->image_path) }}" alt="商品画像" style="max-width: 200px;">
+          </div>
+        @endif
       </p>
 
       @if($errors->any())

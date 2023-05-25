@@ -86,6 +86,7 @@ class ProductsController extends Controller
             'price' => 'required|numeric',
             'stock' => 'required|numeric',
             'comment' => 'nullable',
+            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -101,6 +102,12 @@ class ProductsController extends Controller
         $product->price = $request->input('price');
         $product->stock = $request->input('stock');
         $product->comment = $request->input('comment');
+
+        if ($request->hasFile('image_path')) {
+            $image = $request->file('image_path');
+            $imagePath = $image->store('products', 'public');
+            $product->image_path = $imagePath;
+        }
 
         $product->save();
 
