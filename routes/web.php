@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,3 +35,13 @@ Route::delete('/products/{product}', 'ProductsController@destroy')->name('produc
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/products', 'ProductsController@index')->name('products.index');
+    Route::get('/products/create', 'ProductsController@create')->name('products.create');
+    Route::post('/products', 'ProductsController@store')->name('products.store');
+    Route::get('/products/{product}', 'ProductsController@show')->name('products.show');
+    Route::get('/products/{product}/edit', 'ProductsController@edit')->name('products.edit');
+    Route::put('/products/{product}', 'ProductsController@update')->name('products.update');
+    Route::delete('/products/{product}', 'ProductsController@destroy')->name('products.destroy');
+});
