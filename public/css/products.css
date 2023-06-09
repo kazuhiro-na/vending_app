@@ -1,0 +1,25 @@
+.search-form {
+  margin-bottom: 50px;
+}
+
+.form-group {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+#product_name, #company_name {
+  width: 200px;
+}
+
+.products_list {
+  margin-bottom: 40px;
+} 
+
+table {
+  width: 100%;
+}
+
+tbody tr {
+  background-color: #fff;
+  border-bottom: 10px solid transparent;
+}
