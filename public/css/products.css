@@ -23,3 +23,11 @@ tbody tr {
   background-color: #fff;
   border-bottom: 10px solid transparent;
 }
+
+label {
+  display: block;
+}
+
+input[type="text"], select, textarea {
+  width: 100%;
+}
