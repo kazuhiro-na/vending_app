@@ -31,3 +31,23 @@ label {
 input[type="text"], select, textarea {
   width: 100%;
 }
+
+.card {
+  margin-bottom: 20px;
+}
+
+.card-header {
+  font-weight: bold;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.btn {
+  margin-right: 10px;
+}
