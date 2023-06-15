@@ -55,10 +55,10 @@ class ProductsController extends Controller
 
             DB::commit();
     
-            return redirect('/products')->with('success', '商品を登録しました。');
+            return redirect('/products')->with('success', config('messages.created'));
         } catch (\Exception $e) {
             DB::rollback();
-            return back()->with('error', '商品の登録中にエラーが発生しました。');
+            return back()->with('error', config('messages.create_error'));
         }
         
     }
@@ -102,10 +102,10 @@ class ProductsController extends Controller
 
             DB::commit();
 
-            return redirect()->route('products.show', ['product' => $product->id])->with('success', '商品が更新されました');
+            return redirect()->route('products.show', ['product' => $product->id])->with('success', config('messages.updated'));
         } catch (\Exception $e) {
             DB::rollback();
-            return back()->with('error', '商品の更新中にエラーが発生しました。');
+            return back()->with('error', config('messages.update_error'));
         }
     }
 
@@ -117,10 +117,10 @@ class ProductsController extends Controller
             $product->delete();
             DB::commit();
 
-            return redirect()->route('products.index')->with('success', '商品を削除しました。');
+            return redirect()->route('products.index')->with('success', config('messages.deleted'));
         } catch (\Exception $e) {
             DB::rollback();
-            return back()->with('error', '商品の削除中にエラーが発生しました。');
+            return back()->with('error', config('messages.delete_error'));
         }
     }
 
