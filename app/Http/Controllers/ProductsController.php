@@ -134,9 +134,17 @@ class ProductsController extends Controller
 
     public function destroy(Product $product)
     {
-        $product->delete();
+        DB::beginTransaction();
 
-        return redirect()->route('products.index')->with('success', '商品を削除しました。');
+        try {
+            $product->delete();
+            DB::commit();
+
+            return redirect()->route('products.index')->with('success', '商品を削除しました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back()->with('error', '商品の削除中にエラーが発生しました。');
+        }
     }
 
 
