@@ -50,21 +50,9 @@ class ProductsController extends Controller
                 'comment' => 'nullable',
                 'image_path' => 'required|image|mimes:jpeg,png,jpg,gif',
             ]);
-    
-            $product = new Product;
-            $product->name = $request->name;
-            $product->company_id = $request->company_id;
-            $product->price = $request->price;
-            $product->stock = $request->stock;
-            $product->comment = $request->comment;
-    
-            if ($request->hasFile('image_path')) {
-                $image = $request->file('image_path');
-                $imagePath = $image->store('products', 'public');
-                $product->image_path = $imagePath;
-            }
-    
-            $product->save();
+
+            $product = Product::createProduct($request->all());
+            
             DB::commit();
     
             return redirect('/products')->with('success', '商品を登録しました。');
