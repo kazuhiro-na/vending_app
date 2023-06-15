@@ -75,9 +75,9 @@ class ProductsController extends Controller
         
     }
     //商品詳細を表示
-    public function show($id)
+    public function show($productId)
     {
-        $product = Product::findOrFail($id);
+        $product = (new Product)->getProduct($productId);
         return view('products.show', ['product' => $product]);
     }
     //商品編集画面を表示
