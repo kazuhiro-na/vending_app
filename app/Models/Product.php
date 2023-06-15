@@ -9,6 +9,11 @@ class Product extends Model
 {
     use HasFactory;
 
+    public function getProduct($productId)
+    {
+        return $this->find($productId);
+    }
+
     public function company()
     {
         return $this->belongsTo('App\Models\Company');
