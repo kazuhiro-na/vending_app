@@ -9,6 +9,26 @@ class Product extends Model
 {
     use HasFactory;
 
+    public static function createProduct($data)
+    {
+        $product = new Product;
+        $product->name = $data['name'];
+        $product->company_id = $data['company_id'];
+        $product->price = $data['price'];
+        $product->stock = $data['stock'];
+        $product->comment = $data['comment'];
+
+        if (isset($data['image_path'])) {
+            $image = $data['image_path'];
+            $imagePath = $image->store('products', 'public');
+            $product->image_path = $imagePath;
+        }
+
+        $product->save();
+
+        return $product;
+    }
+    
     public function getProduct($productId)
     {
         return $this->find($productId);
