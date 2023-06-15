@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
 use App\Models\Company;
+use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {   
@@ -38,31 +39,40 @@ class ProductsController extends Controller
     //商品を登録する
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'company_id' => 'required',
-            'price' => 'required|numeric',
-            'stock' => 'required|numeric',
-            'comment' => 'nullable',
-            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif',
-        ]);
+        DB::beginTransaction();
 
-        $product = new Product;
-        $product->name = $request->name;
-        $product->company_id = $request->company_id;
-        $product->price = $request->price;
-        $product->stock = $request->stock;
-        $product->comment = $request->comment;
-
-        if ($request->hasFile('image_path')) {
-            $image = $request->file('image_path');
-            $imagePath = $image->store('products', 'public');
-            $product->image_path = $imagePath;
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|max:255',
+                'company_id' => 'required',
+                'price' => 'required|numeric',
+                'stock' => 'required|numeric',
+                'comment' => 'nullable',
+                'image_path' => 'required|image|mimes:jpeg,png,jpg,gif',
+            ]);
+    
+            $product = new Product;
+            $product->name = $request->name;
+            $product->company_id = $request->company_id;
+            $product->price = $request->price;
+            $product->stock = $request->stock;
+            $product->comment = $request->comment;
+    
+            if ($request->hasFile('image_path')) {
+                $image = $request->file('image_path');
+                $imagePath = $image->store('products', 'public');
+                $product->image_path = $imagePath;
+            }
+    
+            $product->save();
+            DB::commit();
+    
+            return redirect('/products')->with('success', '商品を登録しました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back()->with('error', '商品の登録中にエラーが発生しました。');
         }
-
-        $product->save();
-
-        return redirect('/products')->with('success', '商品を登録しました。');
+        
     }
     //商品詳細を表示
     public function show($id)
