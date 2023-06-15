@@ -52,7 +52,7 @@ class ProductsController extends Controller
             ]);
 
             $product = Product::createProduct($request->all());
-            
+
             DB::commit();
     
             return redirect('/products')->with('success', '商品を登録しました。');
@@ -96,21 +96,10 @@ class ProductsController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
             
-            $product = Product::findOrFail($id);
+            $data = $request->all();
 
-            $product->name = $request->input('name');
-            $product->company_id = $request->input('company_id');
-            $product->price = $request->input('price');
-            $product->stock = $request->input('stock');
-            $product->comment = $request->input('comment');
+            $product = (new Product)->updateProduct($id, $data);
 
-            if ($request->hasFile('image_path')) {
-                $image = $request->file('image_path');
-                $imagePath = $image->store('products', 'public');
-                $product->image_path = $imagePath;
-            }
-
-            $product->save();
             DB::commit();
 
             return redirect()->route('products.show', ['product' => $product->id])->with('success', '商品が更新されました');
