@@ -90,38 +90,46 @@ class ProductsController extends Controller
     //商品情報を更新
     public function update(Request $request, $id)
     {
-        $rules = [
-            'name' => 'required|max:255',
-            'company_id' => 'required',
-            'price' => 'required|numeric',
-            'stock' => 'required|numeric',
-            'comment' => 'nullable',
-            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif',
-        ];
+        DB::beginTransaction();
 
-        $validator = Validator::make($request->all(), $rules);
+        try {
+            $rules = [
+                'name' => 'required|max:255',
+                'company_id' => 'required',
+                'price' => 'required|numeric',
+                'stock' => 'required|numeric',
+                'comment' => 'nullable',
+                'image_path' => 'required|image|mimes:jpeg,png,jpg,gif',
+            ];
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            
+            $product = Product::findOrFail($id);
+
+            $product->name = $request->input('name');
+            $product->company_id = $request->input('company_id');
+            $product->price = $request->input('price');
+            $product->stock = $request->input('stock');
+            $product->comment = $request->input('comment');
+
+            if ($request->hasFile('image_path')) {
+                $image = $request->file('image_path');
+                $imagePath = $image->store('products', 'public');
+                $product->image_path = $imagePath;
+            }
+
+            $product->save();
+            DB::commit();
+
+            return redirect()->route('products.show', ['product' => $product->id])->with('success', '商品が更新されました');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back()->with('error', '商品の更新中にエラーが発生しました。');
         }
-        
-        $product = Product::findOrFail($id);
-
-        $product->name = $request->input('name');
-        $product->company_id = $request->input('company_id');
-        $product->price = $request->input('price');
-        $product->stock = $request->input('stock');
-        $product->comment = $request->input('comment');
-
-        if ($request->hasFile('image_path')) {
-            $image = $request->file('image_path');
-            $imagePath = $image->store('products', 'public');
-            $product->image_path = $imagePath;
-        }
-
-        $product->save();
-
-        return redirect()->route('products.show', ['product' => $product->id])->with('success', '商品が更新されました');
     }
 
     public function destroy(Product $product)
