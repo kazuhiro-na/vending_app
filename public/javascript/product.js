@@ -42,7 +42,7 @@ $(document).ready(function() {
           var html = '<tr>' +
             '<td>' + product.company + '</td>' +
             '<td><img src="' + product.image + '" alt="商品画像" style="max-width: 200px;"></td>' +
-            '<td><a href="/products/' + product.id + '">' + product.name + '</a></td>' +
+            '<td><a href="#">' + product.name + '</a></td>' +
             '<td>' + product.price + '</td>' +
             '<td>' + product.stock + '</td>' +
             '<td>' + product.comment + '</td>' +
