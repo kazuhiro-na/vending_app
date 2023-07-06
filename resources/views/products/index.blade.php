@@ -3,7 +3,7 @@
 @section('content')
   <div class="container">
     <div class="search-form">
-      <form action="{{ route('products.index') }}" method="GET">
+      <form id="search-form" action="{{ route('products.index') }}" method="GET">
         <div class="form-group">
           <label for="product_name">商品名</label>
           <input type="text" name="product_name" id="product_name" value="{{ request('product_name') }}">
@@ -22,8 +22,8 @@
       </form>
     </div>
     <h1>商品一覧画面</h1>
-    <div class=products_list>
-      <table>
+    <div class="products_list">
+      <table id="products-table">
         @csrf
         <thead>
           <tr>
