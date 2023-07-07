@@ -22,6 +22,7 @@ $(document).ready(function() {
           var price = $(this).find('td:nth-child(4)').text();
           var stock = $(this).find('td:nth-child(5)').text();
           var comment = $(this).find('td:nth-child(6)').text();
+          var id = parseInt($(this).data('id'));
 
           var product = {
             company: company,
@@ -29,20 +30,22 @@ $(document).ready(function() {
             name: name,
             price: price,
             stock: stock,
-            comment: comment
+            comment: comment,
+            id: id,
+            url: 'products/' + id
           };
 
           productListArray.push(product);
         });
 
         console.log(productListArray);
+        console.log(products);
 
-        // 商品情報をHTML要素として表示
         productListArray.forEach(function(product) {
           var html = '<tr>' +
             '<td>' + product.company + '</td>' +
             '<td><img src="' + product.image + '" alt="商品画像" style="max-width: 200px;"></td>' +
-            '<td><a href="#">' + product.name + '</a></td>' +
+            '<td><a href="' + product.url + '">' + product.name + '</a></td>' +
             '<td>' + product.price + '</td>' +
             '<td>' + product.stock + '</td>' +
             '<td>' + product.comment + '</td>' +

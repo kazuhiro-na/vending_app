@@ -37,7 +37,7 @@
         </thead>
         <tbody>
         @foreach ($products as $product)
-          <tr>
+          <tr data-id="{{ $product->id }}">
             <td>{{ $product->company->company_name }}</td>
             <td><img src="{{ asset('storage/' . $product->image_path) }}" alt="商品画像" style="max-width: 200px;"></td>
             <td><a href="{{ route('products.show', $product) }}">{{ $product->name }}</a></td>
