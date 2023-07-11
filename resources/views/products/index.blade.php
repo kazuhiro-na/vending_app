@@ -18,6 +18,22 @@
             @endforeach
           </select>
         </div>
+        <div class="form-group">
+          <label for="price_min">価格(下限)</label>
+          <input type="number" name="price_min" id="price_min" value="{{ request('price_min') }}" min="0">
+        </div>
+        <div class="form-group">
+          <label for="price_max">価格(上限)</label>
+          <input type="number" name="price_max" id="price_max" value="{{ request('price_max') }}" min="0">
+        </div>
+        <div class="form-group">
+          <label for="stock_min">在庫数(下限)</label>
+          <input type="number" name="stock_min" id="stock_min" value="{{ request('stock_min') }}" min="0">
+        </div>
+        <div class="form-group">
+          <label for="stock_max">在庫数(上限)</label>
+          <input type="number" name="stock_max" id="stock_max" value="{{ request('stock_max') }}" min="0">
+        </div>
         <button type="submit">検索</button>
       </form>
     </div>

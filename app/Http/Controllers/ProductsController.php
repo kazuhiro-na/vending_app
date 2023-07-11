@@ -25,6 +25,14 @@ class ProductsController extends Controller
             });
         }
 
+        if ($request->filled('price_min') && $request->filled('price_max')) {
+            $query->whereBetween('price', [$request->input('price_min'), $request->input('price_max')]);
+        }
+
+        if ($request->filled('stock_min') && $request->filled('stock_max')) {
+            $query->whereBetween('stock', [$request->input('stock_min'), $request->input('stock_max')]);
+        }
+
         $products = $query->get();
         $companies = Company::all();
         
