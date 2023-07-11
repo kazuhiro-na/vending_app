@@ -13,6 +13,9 @@ class ProductsController extends Controller
     //商品一覧を表示
     public function index(Request $request)
     {
+        $sort = $request->input('sort', 'id');
+        $order = $request->input('order', 'desc');
+
         $query = Product::query();
 
         if ($request->filled('product_name')) {
@@ -33,10 +36,10 @@ class ProductsController extends Controller
             $query->whereBetween('stock', [$request->input('stock_min'), $request->input('stock_max')]);
         }
 
-        $products = $query->get();
+        $products = $query->orderBy($sort, $order)->get();
         $companies = Company::all();
         
-        return view('products.index', compact('products', 'companies'));
+        return view('products.index', compact('products', 'companies', 'sort', 'order'));
     }
     //商品登録フォームを表示
     public function create()

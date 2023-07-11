@@ -43,11 +43,11 @@
         @csrf
         <thead>
           <tr>
-            <th>メーカー</th>
+            <th><a href="{{ route('products.index', array_merge(request()->query(), ['sort' => 'company_id', 'order' => $sort === 'company_id' && $order === 'asc' ? 'desc' : 'asc'])) }}">メーカー</a></th>
             <th>商品画像</th>
-            <th>商品名</th>
-            <th>値段</th>
-            <th>在庫</th>
+            <th><a href="{{ route('products.index', array_merge(request()->query(), ['sort' => 'name', 'order' => $sort === 'name' && $order === 'asc' ? 'desc' : 'asc'])) }}">商品名</a></th>
+            <th><a href="{{ route('products.index', array_merge(request()->query(), ['sort' => 'price', 'order' => $sort === 'price' && $order === 'asc' ? 'desc' : 'asc'])) }}">値段</a></th>
+            <th><a href="{{ route('products.index', array_merge(request()->query(), ['sort' => 'stock', 'order' => $sort === 'stock' && $order === 'asc' ? 'desc' : 'asc'])) }}">在庫</a></th>
             <th>コメント</th>
           </tr>
         </thead>
