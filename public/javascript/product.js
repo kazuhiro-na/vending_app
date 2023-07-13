@@ -1,4 +1,23 @@
 $(document).ready(function() {
+  function confirmDelete(form, url) {
+    if (confirm('本当に削除しますか？')) {
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: form.serialize(),
+        success: function(response) {
+          // 削除成功時の処理
+          form.closest('tr').remove();
+          console.log(response);
+        },
+        error: function(xhr, status, error) {
+          // エラー時の処理
+          console.log(xhr.responseText);
+        }
+      });
+    }
+  };
+
   $('#search-form').on('submit', function(event) {
     event.preventDefault();
 
@@ -43,7 +62,8 @@ $(document).ready(function() {
 
         productListArray.forEach(function(product) {
           var url = 'products/' + product.id;
-          var html = '<tr>' +
+          var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+          var html = '<tr data-id="' + product.id + '">' +
             '<td>' + product.company + '</td>' +
             '<td><img src="' + product.image + '" alt="商品画像" style="max-width: 200px;"></td>' +
             '<td><a href="' + product.url + '">' + product.name + '</a></td>' +
@@ -51,7 +71,9 @@ $(document).ready(function() {
             '<td>' + product.stock + '</td>' +
             '<td>' + product.comment + '</td>' +
             '<td>' +
-            '<form action="' + url + '" onsubmit="return confirm(\'本当に削除しますか？\');">' +
+            '<form action="' + url + '" method="POST" onsubmit="event.preventDefault(); confirmDelete(this);">' +
+            '<input type="hidden" name="_token" value="' + csrfToken + '">' +
+            '<input type="hidden" name="_method" value="DELETE">' +
             '<button type="submit" class="btn btn-danger delete-btn"  data-product-id="' + product.id + '">削除</button>' +
             '</form>' +
             '</td>' +
@@ -65,27 +87,13 @@ $(document).ready(function() {
       }
     });
   });
-  $('.delete-btn').click(function(e) {
-    e.preventDefault();
-
-    var form = $(this).closest('form');
+  $('.products_list').on('submit', 'form', function(event) {
+    event.preventDefault();
+  
+    var form = $(this);
     var url = form.attr('action');
 
-    if (confirm('本当に削除しますか？')) {
-      $.ajax({
-        url: url,
-        type: 'POST',
-        data: form.serialize(),
-        success: function(response) {
-          form.closest('tr').remove();
-          console.log(response);
-        },
-        error: function(xhr, status, error) {
-          console.log(xhr.responseText);
-        }
-      })
-    }
+    confirmDelete(form, url);
   });
-  
 });
   

@@ -61,7 +61,7 @@
             <td>{{ $product->stock }}</td>
             <td>{{ $product->comment }}</td>
             <td>
-              <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('本当に削除しますか？');">
+              <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="event.preventDefault(); confirmDelete(this);">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger delete-btn">削除</button>
