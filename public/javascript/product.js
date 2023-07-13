@@ -42,6 +42,7 @@ $(document).ready(function() {
         console.log(products);
 
         productListArray.forEach(function(product) {
+          var url = 'products/' + product.id;
           var html = '<tr>' +
             '<td>' + product.company + '</td>' +
             '<td><img src="' + product.image + '" alt="商品画像" style="max-width: 200px;"></td>' +
@@ -50,8 +51,8 @@ $(document).ready(function() {
             '<td>' + product.stock + '</td>' +
             '<td>' + product.comment + '</td>' +
             '<td>' +
-            '<form action="#" method="POST" onsubmit="return confirm(\'本当に削除しますか？\');">' +
-            '<button type="submit" class="btn btn-danger">削除</button>' +
+            '<form action="' + url + '" onsubmit="return confirm(\'本当に削除しますか？\');">' +
+            '<button type="submit" class="btn btn-danger delete-btn"  data-product-id="' + product.id + '">削除</button>' +
             '</form>' +
             '</td>' +
             '</tr>';
@@ -64,5 +65,27 @@ $(document).ready(function() {
       }
     });
   });
+  $('.delete-btn').click(function(e) {
+    e.preventDefault();
+
+    var form = $(this).closest('form');
+    var url = form.attr('action');
+
+    if (confirm('本当に削除しますか？')) {
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: form.serialize(),
+        success: function(response) {
+          form.closest('tr').remove();
+          console.log(response);
+        },
+        error: function(xhr, status, error) {
+          console.log(xhr.responseText);
+        }
+      })
+    }
+  });
+  
 });
   

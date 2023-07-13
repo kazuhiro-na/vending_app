@@ -128,10 +128,10 @@ class ProductsController extends Controller
             $product->delete();
             DB::commit();
 
-            return redirect()->route('products.index')->with('success', config('messages.deleted'));
+            return response()->json(['success' => config('messages.deleted')]);
         } catch (\Exception $e) {
             DB::rollback();
-            return back()->with('error', config('messages.delete_error'));
+            return response()->json(['error' => config('messages.delete_error')]);
         }
     }
 

@@ -64,7 +64,7 @@
               <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('本当に削除しますか？');">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger">削除</button>
+                <button type="submit" class="btn btn-danger delete-btn">削除</button>
               </form>
             </td>
           </tr>
